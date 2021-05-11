@@ -52,6 +52,7 @@ export default class JitsiComponent extends Component {
 			passwordRequired: this.passwordRequired,
 		});
 	};
+
 	handleClose = () => {
 		//console.log("handleClose");
 	};
@@ -105,6 +106,7 @@ export default class JitsiComponent extends Component {
 			this.setState({ isVideoMuted: !this.state.isVideoMuted });
 		}
 	}
+	
 	getParticipants() {
 		return new Promise((resolve, reject) => {
 			setTimeout(() => {
