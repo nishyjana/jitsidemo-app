@@ -15,6 +15,7 @@ export default class JitsiComponent extends Component {
 			isVideoMuted: false,
 		};
 	}
+	
 
 	startMeet = () => {
 		const options = {
@@ -27,7 +28,10 @@ export default class JitsiComponent extends Component {
 			userInfo: {
 				displayName: this.state.user.name,
 			},
+			
+
 		};
+		
 		this.api = new window.JitsiMeetExternalAPI(this.domain, options);
 
 		this.api.addEventListeners({
@@ -48,11 +52,11 @@ export default class JitsiComponent extends Component {
 	};
 	handlePassword = (event) => {
 		if (event.role === "moderator") {
-			this.api?.executeCommand("password", "The Password");
+			this.api?.executeCommand("password", "EXPERT");
 		}
 	};
 	passwordRequired = () => {
-		this.api?.executeCommand("password", "The Password");
+		this.api?.executeCommand("password", "EXPERT");
 	};
 	handleParticipantLeft = async (participant) => {
 		//console.log("handleParticipantLeft", participant);
