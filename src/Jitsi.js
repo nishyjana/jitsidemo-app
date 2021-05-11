@@ -17,28 +17,18 @@ export default class JitsiComponent extends Component {
 	}
 
 	startMeet = () => {
-		
 		const options = {
 			roomName: this.state.room,
 			width: "100%",
-			height: 500,
+			height: 900,
 			configOverwrite: { prejoinPageEnabled: false },
-			interfaceConfigOverwrite: {},
+			interfaceConfigOverwrite: { TILE_VIEW_MAX_COLUMNS: 5,DEFAULT_LOGO_URL:'' },
 			parentNode: document.querySelector("#jitsi-iframe"),
 			userInfo: {
 				displayName: this.state.user.name,
 			},
 		};
 		this.api = new window.JitsiMeetExternalAPI(this.domain, options);
-
-		this.api.addEventListener("participantRoleChanged", function (event) {
-			if (event.role === "moderator") {
-				this.api?.executeCommand("password", "The Password");
-			}
-		});
-		this.api.on("passwordRequired", function () {
-			this.api?.executeCommand("password", "The Password");
-		});
 
 		this.api.addEventListeners({
 			readyToClose: this.handleClose,
@@ -106,11 +96,11 @@ export default class JitsiComponent extends Component {
 			this.setState({ isVideoMuted: !this.state.isVideoMuted });
 		}
 	}
-	
+
 	getParticipants() {
 		return new Promise((resolve, reject) => {
 			setTimeout(() => {
-				resolve(this.api.getParticipantsInfo()); // get all participants
+				resolve(this.api.getParticipantsInfo());
 			}, 500);
 		});
 	}
@@ -120,7 +110,7 @@ export default class JitsiComponent extends Component {
 			this.startMeet();
 			const data = this.api.getNumberOfParticipants();
 
-			console.log(data, "noooo");
+			console.log(data, "no of participants");
 		} else {
 			alert("JitsiMeetExternalAPI not loaded");
 		}
@@ -130,7 +120,7 @@ export default class JitsiComponent extends Component {
 		return (
 			<>
 				<header className='nav-bar'>
-					<p className='item-left heading'>EXPERT REPUBLIC</p>
+					<p className='item-left heading'>EXPERT REPUBLIC DEMO</p>
 				</header>
 				<div id='jitsi-iframe'></div>
 				<div class='item-center'>
