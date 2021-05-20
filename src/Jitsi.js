@@ -7,31 +7,33 @@ export default class JitsiComponent extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			room: "Nishy Room",
-			user: {
-				name: "Nishy",
-			},
+			room: "Nishy",
 			isAudioMuted: false,
 			isVideoMuted: false,
 		};
 	}
-	
 
 	startMeet = () => {
 		const options = {
 			roomName: this.state.room,
 			width: "100%",
 			height: 900,
-			configOverwrite: { prejoinPageEnabled: false },
-			interfaceConfigOverwrite: { TILE_VIEW_MAX_COLUMNS: 5,DEFAULT_LOGO_URL:'' },
-			parentNode: document.querySelector("#jitsi-iframe"),
-			userInfo: {
-				displayName: this.state.user.name,
+			configOverwrite: {
+				prejoinPageEnabled: false,
+				startWithVideoMuted: true,
+				minHeightForQualityLvl: {
+					360: "standard",
+					720: "high",
+				},
 			},
-			
-
+			interfaceConfigOverwrite: {
+				TILE_VIEW_MAX_COLUMNS: 10,
+				DEFAULT_LOGO_URL: "",
+			},
+			parentNode: document.querySelector("#jitsi-iframe"),
+			jwt: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb250ZXh0Ijp7InVzZXIiOnsiYXZhdGFyIjoiaHR0cHM6Ly93d3cuZGFpbHltb3NzLmNvbS93cC1jb250ZW50L3VwbG9hZHMvMjAxOS8wOC9mdW5ueS1wcm9maWxlLXBpYzU5LmpwZyIsIm5hbWUiOiJuaXNoeSIsImVtYWlsIjoibmlzaHlAcm9vdGNvZGVsYWJzLmNvbSJ9fSwiYXVkIjoiMDQ0RTMiLCJpc3MiOiIwNDRFMyIsInN1YiI6Im1lZXQuZXhwZXJ0cmVwdWJsaWMuY29tIiwicm9vbSI6Im5pc2h5In0.2j2qFLlEyGMtjoXRxzeB7oF2Hp3xNkN3XM_1bJHIfiQ",
 		};
-		
+
 		this.api = new window.JitsiMeetExternalAPI(this.domain, options);
 
 		this.api.addEventListeners({
@@ -42,22 +44,20 @@ export default class JitsiComponent extends Component {
 			videoConferenceLeft: this.handleVideoConferenceLeft,
 			audioMuteStatusChanged: this.handleMuteStatus,
 			videoMuteStatusChanged: this.handleVideoStatus,
-			participantRoleChanged: this.handlePassword,
-			passwordRequired: this.passwordRequired,
 		});
 	};
 
 	handleClose = () => {
 		//console.log("handleClose");
 	};
-	handlePassword = (event) => {
-		if (event.role === "moderator") {
-			this.api?.executeCommand("password", "EXPERT");
-		}
-	};
-	passwordRequired = () => {
-		this.api?.executeCommand("password", "EXPERT");
-	};
+	// handlePassword = (event) => {
+	// 	if (event.role === "moderator") {
+	// 		this.api?.executeCommand("password", "EXPERT");
+	// 	}
+	// };
+	// passwordRequired = () => {
+	// 	this.api?.executeCommand("password", "EXPERT");
+	// };
 	handleParticipantLeft = async (participant) => {
 		//console.log("handleParticipantLeft", participant);
 		const data = await this.getParticipants();
