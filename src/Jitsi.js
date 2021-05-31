@@ -16,20 +16,8 @@ export default class JitsiComponent extends Component {
 	startMeet = () => {
 		const options = {
 			roomName: this.state.room,
-			width: "100%",
+			width: 1900,
 			height: 900,
-			configOverwrite: {
-				prejoinPageEnabled: false,
-				startWithVideoMuted: true,
-				minHeightForQualityLvl: {
-					360: "standard",
-					720: "high",
-				},
-			},
-			interfaceConfigOverwrite: {
-				TILE_VIEW_MAX_COLUMNS: 10,
-				DEFAULT_LOGO_URL: "",
-			},
 			parentNode: document.querySelector("#jitsi-iframe"),
 			jwt: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb250ZXh0Ijp7InVzZXIiOnsiYXZhdGFyIjoiaHR0cHM6Ly93d3cuZGFpbHltb3NzLmNvbS93cC1jb250ZW50L3VwbG9hZHMvMjAxOS8wOC9mdW5ueS1wcm9maWxlLXBpYzU5LmpwZyIsIm5hbWUiOiJuaXNoeSIsImVtYWlsIjoibmlzaHlAcm9vdGNvZGVsYWJzLmNvbSJ9fSwiYXVkIjoiMDQ0RTMiLCJpc3MiOiIwNDRFMyIsInN1YiI6Im1lZXQuZXhwZXJ0cmVwdWJsaWMuY29tIiwicm9vbSI6Im5pc2h5In0.2j2qFLlEyGMtjoXRxzeB7oF2Hp3xNkN3XM_1bJHIfiQ",
 		};
@@ -66,11 +54,14 @@ export default class JitsiComponent extends Component {
 	handleParticipantJoined = async (participant) => {
 		//console.log("handleParticipantJoined", participant);
 		const data = await this.getParticipants();
+		console.log(data)
 	};
 
 	handleVideoConferenceJoined = async (participant) => {
 		//	console.log("handleVideoConferenceJoined", participant);
 		const data = await this.getParticipants();
+		console.log(data)
+		
 	};
 
 	handleVideoConferenceLeft = () => {
